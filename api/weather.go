@@ -8,7 +8,7 @@ import (
 )
 
 // Handler processes incoming HTTP requests and generate responses
-func Handler(w http.ResponseWriter, r *http.Request) {
+func WeatherHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract query parameters for latitude and longitude
 	lat := r.URL.Query().Get("lat")
 	lon := r.URL.Query().Get("lon")
