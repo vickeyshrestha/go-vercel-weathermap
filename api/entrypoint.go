@@ -34,9 +34,9 @@ func init() {
 }
 
 // Handler is the entry point for serverless function
-func Handler(w http.ResponseWriter, r *http.Request) {
+/*func Handler(w http.ResponseWriter, r *http.Request) {
 	app.ServeHTTP(w, r)
-}
+}*/
 
 type album struct {
 	ID     string  `json:"id"`
