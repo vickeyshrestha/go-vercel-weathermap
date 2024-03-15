@@ -2,12 +2,13 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	openweather "go-vercel-weathermap/components"
 	"net/http"
 	"os"
 )
 
-// Handler processes incoming HTTP requests and generate responses
+// WeatherHandler processes incoming HTTP requests and generate responses
 func WeatherHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract query parameters for latitude and longitude
 	lat := r.URL.Query().Get("lat")
@@ -43,6 +44,9 @@ func WeatherHandler(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{
 		"weather_condition": weather.Weather[0].Main,
 		"temperature":       tempDesc,
+		"temp in degree C":  fmt.Sprintf("%f", weather.Main.Temp),
+		"country":           weather.Sys.Country,
+		"City":              weather.Name,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
