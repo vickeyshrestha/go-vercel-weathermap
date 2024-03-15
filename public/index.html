@@ -43,9 +43,9 @@
     </style>
   </head>
   <body>
-    <h1>Serverless Functions made with Go!</h1>
+    <h1>Serverless Functions made with Go using Open Weather API!</h1>
     <a
-      href="https://github.com/vickeyshrestha/go-vercel-serverless"
+      href="https://github.com/vickeyshrestha/go-vercel-weathermap"
       rel="noopener noreferrer"
       target="_blank"
       style="display: flex; align-items: center"
@@ -80,13 +80,13 @@
     </a>
     <br />
 
-    <a href="/api/weather?lat=32.7942144&lon=-97.1702272"> Get Weather info</a>
-
-    <form action="your-server-endpoint" method="get">
+    <br> Just enter the global coordinates below to get the weather information of that location
+    <br />
+    <form action="/api/weather" method="get">
       <label for="inputBoxLat">Enter latitude:</label>
-      <input type="text" id="inputBoxLat" name="lat">
+      <input type="text" style="border:1px solid #ff0000" id="inputBoxLat" name="lat">
       <label for="inputBoxLon">Enter longitude:</label>
-      <input type="text" id="inputBoxLon" name="lat">
+      <input type="text" style="border:1px solid #ff0000" id="inputBoxLon" name="lat">
       <button type="submit">Submit</button>
     </form>
 
@@ -95,7 +95,7 @@
     <br />
 
     <a
-      href="https://github.com/vickeyshrestha/go-vercel-serverless"
+      href="https://github.com/vickeyshrestha/"
       rel="noopener noreferrer"
       target="_blank"
       style="color: rgb(59, 130, 246)"

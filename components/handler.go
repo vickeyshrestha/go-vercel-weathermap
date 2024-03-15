@@ -2,6 +2,7 @@ package openweather
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -42,6 +43,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{
 		"weather_condition": weather.Weather[0].Main,
 		"temperature":       tempDesc,
+		"temp in degree C":  fmt.Sprintf("%f", weather.Main.Temp),
+		"country":           weather.Sys.Country,
+		"City":              weather.Name,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
