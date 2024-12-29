@@ -140,7 +140,7 @@
 
     resultDiv.innerHTML = '<p>Loading...</p>';
 
-    fetch(`http://localhost:3001/api/weather?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`)
+    fetch(`/api/weather?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`)
             .then(response => response.json())
             .then(data => {
               if (data.error) {
