@@ -1,106 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>go-vercel-weathermap</title>
-    <style>
-      *,
-      :after,
-      :before {
-        box-sizing: border-box;
-        border: 0 solid;
-      }
-      html {
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-          Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-      }
-      body {
-        padding-top: 2.5rem;
-        padding-bottom: 2.5rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        max-width: 48rem;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      h1 {
-        font-size: 1.6285714em;
-        margin-top: 0.8em;
-        margin-bottom: 0.8em;
-        line-height: 1.4;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Map</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
 
-      a {
-        display: block;
-        font-size: 1.2857143em;
-        margin-top: 1.5555556em;
-        margin-bottom: 0.4444444em;
-        line-height: 1.5555556;
-        text-decoration: underline;
-        font-weight: 500;
-        color: #111827;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Serverless Functions made with Go using Open Weather API!</h1>
-    <a
-      href="https://github.com/vickeyshrestha/go-vercel-weathermap"
-      rel="noopener noreferrer"
-      target="_blank"
-      style="display: flex; align-items: center"
-    >
-      Github
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 17 16"
-        fill="none"
-        style="width: 22px; height: 22px; margin-left: 10px"
-      >
-        <g clip-path="url(githublogo)" class="jsx-2562017125">
-          <path
-            fill="currentColor"
-            fill-rule="evenodd"
-            d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z"
-            clip-rule="evenodd"
-            class="jsx-2562017125"
-          ></path>
-        </g>
-        <defs class="jsx-2562017125">
-          <clipPath id="githublogo" class="jsx-2562017125">
-            <path
-              fill="transparent"
-              d="M0 0h15.86v15.86H0z"
-              transform="translate(.253906 .0493164)"
-              class="jsx-2562017125"
-            ></path>
-          </clipPath>
-        </defs>
-      </svg>
-    </a>
-    <br />
+    .message {
+      position: absolute;
+      top: 20%;
+      font-size: 2rem;
+      color: white;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
 
-    <br> Just enter the global coordinates below to get the weather information of that location
-    <br />
-    <form action="/api/weather" method="get">
-      <label for="inputBoxLat">Enter latitude:</label>
-      <input type="text" style="border:1px solid #ff0000" id="inputBoxLat" name="lat" value="32.77380425400645">
-      <label for="inputBoxLon">Enter longitude:</label>
-      <input type="text" style="border:1px solid #ff0000" id="inputBoxLon" name="lon" value="-96.85996831389588">
-      <button type="submit">Submit</button>
-    </form>
+    .container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+    }
 
-    <br />
-    <br />
-    <br />
+    h1 {
+      font-size: 2rem;
+      color: #4caf50;
+      margin-bottom: 10px;
+    }
 
-    <a
-      href="https://github.com/vickeyshrestha/"
-      rel="noopener noreferrer"
-      target="_blank"
-      style="color: rgb(59, 130, 246)"
-    >
-      Created by @vickey shrestha
-    </a>
-  </body>
+    .search {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .search button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 2rem;
+      color: #f12007;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer a {
+      color: #031c97;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="message">Allow your location on browser to autofill OR just enter the global coordinates below to get the weather information of that location</div>
+<div class="container">
+  <h1>Weather Map</h1>
+  <div class="search">
+    <input type="text" id="latitude" placeholder="Enter latitude">
+    <input type="text" id="longitude" placeholder="Enter longitude">
+    <button onclick="getWeather()">Search</button>
+  </div>
+  <div class="result" id="result">
+    <!-- Weather information will be displayed here -->
+  </div>
+</div>
+
+<div class="footer">Created by <a href="https://vickeyshrestha-portfolio.vercel.app/" target="_blank">@vickey shrestha</a></div>
+
+<script>
+  // Autofill latitude and longitude fields based on client location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      document.getElementById('latitude').value = position.coords.latitude;
+      document.getElementById('longitude').value = position.coords.longitude;
+    }, error => {
+      console.error('Error fetching location:', error);
+    });
+  } else {
+    console.error('Geolocation is not supported by this browser.');
+  }
+
+  function getWeather() {
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+    const resultDiv = document.getElementById('result');
+
+    if (!latitude || !longitude) {
+      resultDiv.innerHTML = '<p style="color: red;">Please enter both latitude and longitude.</p>';
+      return;
+    }
+
+    resultDiv.innerHTML = '<p>Loading...</p>';
+
+    fetch(`http://localhost:3001/api/weather?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.error) {
+                resultDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
+              } else {
+                resultDiv.innerHTML = `
+              <p><strong>City:</strong> ${data.City}</p>
+              <p><strong>Country:</strong> ${data.country}</p>
+              <p><strong>Temperature (°C):</strong> ${data["temp in degree C"]}</p>
+              <p><strong>Temperature Description:</strong> ${data.temperature}</p>
+              <p><strong>Condition:</strong> ${data.weather_condition}</p>
+            `;
+              }
+            })
+            .catch(err => {
+              resultDiv.innerHTML = '<p style="color: red;">Error fetching weather data.</p>';
+            });
+  }
+</script>
+</body>
 </html>

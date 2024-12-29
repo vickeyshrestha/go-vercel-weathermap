@@ -1,5 +1,6 @@
 # go-vercel-weathermap
 A service that talks to Open Weather API to gather the information based on the provided coordinates. 
+This demonstrates the Serverless Functions made with Go utilizing Vercel.
 
 The latitude & longitude are passed as the URL parameters.
 
